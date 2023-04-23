@@ -1,14 +1,20 @@
 #include "main.h"
 
+
+void char_printer(va_list args, int *i);
+void str_printer(va_list args, int *i);
+void percentage_printer(int *i);
+
 /**
- * printf - produces output according to format
+ * _printf - produces output according to format
  * @format: pointer to a string
- *
+ *..: variadic arguments.
  * Return: the number of charachters printed
  */
+
 int _printf(const char *format, ...)
 {
-	va_list args; 
+	va_list args;
 	int i = 0;
 
 	va_start(args, format);
@@ -18,30 +24,12 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-
 			if (*format == 'c')
-			{
-				char a = va_arg(args, int);
-				i += 1;
-				_putchar(a);
-			}
+				char_printer(args, &i);
 			else if (*format == 's')
-			{
-				char *str = va_arg(args, char*);
-				if (str == NULL)
-					str = "(null)";
-				while (*str != '\0')
-				{
-					i += 1;
-					_putchar(*str);
-					str++;
-				}
-			}
+				str_printer(args, &i);
 			else if (*format == '%')
-			{
-				i += 1;
-				_putchar('%');
-			}
+				percentage_printer(&i);
 			else
 			{
 				_putchar('%');
@@ -50,16 +38,60 @@ int _printf(const char *format, ...)
 			}
 		}
 		else
-		{
-			i += 1;
-			_putchar(*format);
-		}
-
+			i += _putchar(*format);
 		format++;
 	}
 
 	va_end(args);
 
 	return (i);
+}
+
+/**
+ * char_printer - function to print char
+ * @args: argument
+ * @i: pointer to counter
+ * Return: none
+ */
+
+void char_printer(va_list args, int *i)
+{
+	char a = va_arg(args, int);
+
+	*i += 1;
+	_putchar(a);
+
+}
+
+/**
+ * str_printer - function to print strng
+ * @args: argument
+ * @i: pointer to counter
+ * Return: none
+ */
+
+void str_printer(va_list args, int *i)
+{
+	char *str = va_arg(args, char*);
+
+	if (str == NULL)
+		str = "(null)";
+	while (*str != '\0')
+	{
+		_putchar(*str);
+		*i += 1;
+		str++;
+	}
+}
+
+/**
+ * percentage_printer - function to print char
+ * @i: pointer to counter
+ * Return: none
+ */
+void percentage_printer(int *i)
+{
+	_putchar('%');
+	*i += 1;
 }
 
