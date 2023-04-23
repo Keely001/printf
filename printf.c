@@ -30,6 +30,9 @@ int _printf(const char *format, ...)
 				str_printer(args, &i);
 			else if (*format == '%')
 				percentage_printer(&i);
+			else if (*format == 'd' && *format == 'i')
+				int n = va_arg(args, int);
+			        i += print_number(n);
 			else
 			{
 				_putchar('%');
