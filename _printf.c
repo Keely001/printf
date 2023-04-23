@@ -40,7 +40,7 @@ int _printf(const char *format, ...)
 				str = va_arg(args, char *);
 				if (str == NULL)
 				{
-					str = "(NULL)";
+					str = "(null)";
 				}
 				while (*str != '\0')
 				{
