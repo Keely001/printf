@@ -29,7 +29,13 @@ int _printf(const char *format, ...)
 			{
 				char *str = va_arg(args, char*);
 				if (str == NULL)
+<<<<<<< HEAD
 					str = "(null)";
+=======
+				{
+					str = "(null)";
+				}
+>>>>>>> 0725fe8d41d42202655092d2fade2c49ddc0bda8
 				while (*str != '\0')
 				{
 					i += 1;
