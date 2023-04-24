@@ -112,3 +112,96 @@ void binary_printer(va_list args, int *i)
 		*i += 1;
 	}
 }
+
+/**
+ * unsigned_decimal_printer - function to print unsigned decimal integer
+ * @args: argument
+ * @i: pointer to counter
+ * Return: none
+ */
+
+void unsigned_decimal_printer(va_list args, int *i)
+{
+	unsigned int num = va_arg(args, unsigned int);
+	unsigned int div = 1;
+
+	while (num / div > 9)
+		div *= 10;
+
+	while (div != 0)
+	{
+		_putchar(num / div + '0');
+		*i += 1;
+		num %= div;
+		div /= 10;
+	}
+}
+
+
+/**
+ * octal_printer - function to print octal integer
+ * @args: argument
+ * @i: pointer to counter
+ * Return: none
+ */
+
+void octal_printer(va_list args, int *i)
+{
+	unsigned int num = va_arg(args, unsigned int);
+	int octal_num[100];
+	int k = 0;
+
+	while (num != 0)
+	{
+		octal_num[k] = num % 8;
+		num /= 8;
+		k++;
+	}
+
+	k--;
+
+	while (k >= 0)
+	{
+		_putchar(octal_num[k] + '0');
+		*i += 1;
+		k--;
+	}
+}
+
+/**
+ * hexadecimal_printer - function to print hexadecimal integer
+ * @args: argument
+ * @i: pointer to counter
+ * @capital: flag to indicate if hex is capital or not
+ * Return: none
+ */
+
+void hexadecimal_printer(va_list args, int *i, int capital)
+{
+	unsigned int num = va_arg(args, unsigned int);
+	char hex_num[100];
+	int n = 0;
+
+	while (num != 0)
+	{
+		int temp = 0;
+		temp = num % 16;
+
+		if (temp < 10)
+			hex_num[n] = temp + 48;
+		else
+			hex_num[n] = temp + (capital ? 55 : 87);
+
+		num /= 16;
+		n++;
+	}
+
+	n--;
+
+	while (n >= 0)
+	{
+		_putchar(hex_num[n]);
+		*i += 1;
+		n--;
+	}
+}

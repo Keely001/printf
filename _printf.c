@@ -30,6 +30,14 @@ int _printf(const char *format, ...)
 				decimal_printer(args, &i);
 			else if (*format == 'b')
 				binary_printer(args, &i);
+			else if (*format == 'u')
+				unsigned_decimal_printer(args, &i);
+			else if (*format == 'o')
+				octal_printer(args, &i);
+			else if (*format == 'x')
+				hexadecimal_printer(args, &i, 0);
+			else if (*format == 'X')
+				hexadecimal_printer(args, &i, 1);
 			else
 			{
 				_putchar('%');
