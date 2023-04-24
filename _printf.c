@@ -1,10 +1,6 @@
 #include "main.h"
 
 
-void char_printer(va_list args, int *i);
-void str_printer(va_list args, int *i);
-void percentage_printer(int *i);
-
 /**
  * _printf - produces output according to format
  * @format: pointer to a string
@@ -28,31 +24,10 @@ int _printf(const char *format, ...)
 				char_printer(args, &i);
 			else if (*format == 's')
 				str_printer(args, &i);
-			else if (*format == 'd' || *format == 'i')
-			{
-				int num = va_arg(args, int);
-				int div = 1;
-
-				if (num < 0)
-				{
-					_putchar('-');
-					i++;
-					num *= -1;
-				}
-
-				while (num / div > 9)
-					div *= 10;
-
-				while (div != 0)
-				{
-					_putchar(num / div + '0');
-					i++;
-					num %= div;
-					div /= 10;
-				}
-			}
 			else if (*format == '%')
 				percentage_printer(&i);
+			else if (*format == 'd' || *format == 'i')
+				print_decimal(args, &i);
 			else
 			{
 				_putchar('%');
@@ -68,52 +43,4 @@ int _printf(const char *format, ...)
 	va_end(args);
 
 	return (i);
-}
-
-/**
- * char_printer - function to print char
- * @args: argument
- * @i: pointer to counter
- * Return: none
- */
-
-void char_printer(va_list args, int *i)
-{
-	char a = va_arg(args, int);
-
-	*i += 1;
-	_putchar(a);
-
-}
-
-/**
- * str_printer - function to print strng
- * @args: argument
- * @i: pointer to counter
- * Return: none
- */
-
-void str_printer(va_list args, int *i)
-{
-	char *str = va_arg(args, char*);
-
-	if (str == NULL)
-		str = "(null)";
-	while (*str != '\0')
-	{
-		_putchar(*str);
-		*i += 1;
-		str++;
-	}
-}
-
-/**
- * percentage_printer - function to print char
- * @i: pointer to counter
- * Return: none
- */
-void percentage_printer(int *i)
-{
-	_putchar('%');
-	*i += 1;
 }
