@@ -51,7 +51,7 @@ void char_printer(va_list args, int *i)
 }
 
 /**
- * decimal_printer - function that prints a decimal integer number
+ * print_decimal - function that prints a decimal integer number
  * @args: arguments
  * @i: pointer to an integer
  *

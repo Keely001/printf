@@ -11,6 +11,7 @@ int _printf(const char *format, ...);
 void char_printer(va_list args, int *i);
 void str_printer(va_list args, int *i);
 void percentage_printer(int *i);
-void print_decimal(va_list args, int *i);
+void decimal_printer(va_list args, int *i);
+void binary_printer(va_list args, int *i);
 
 #endif
