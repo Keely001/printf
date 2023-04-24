@@ -27,7 +27,9 @@ int _printf(const char *format, ...)
 			else if (*format == '%')
 				percentage_printer(&i);
 			else if (*format == 'd' || *format == 'i')
-				print_decimal(args, &i);
+				decimal_printer(args, &i);
+			else if (*format == 'b')
+				binary_printer(args, &i);
 			else
 			{
 				_putchar('%');

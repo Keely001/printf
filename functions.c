@@ -51,14 +51,14 @@ void char_printer(va_list args, int *i)
 }
 
 /**
- * print_decimal - function that prints a decimal integer number
+ * decimal_printer - function that prints a decimal integer number
  * @args: arguments
  * @i: pointer to an integer
  *
  * Return: void
  */
 
-void print_decimal(va_list args, int *i)
+void decimal_printer(va_list args, int *i)
 {
 	int num = va_arg(args, int);
 	int div = 1;
@@ -77,5 +77,38 @@ void print_decimal(va_list args, int *i)
 		*i += 1;
 		num %= div;
 		div /= 10;
+	}
+}
+
+/**
+ * binary_printer - function that prints binary representation of numbers.
+ * @args: argument
+ * @i: pointer to the counter
+ * Return: none
+ */
+void binary_printer(va_list args, int *i)
+{
+	unsigned int number = va_arg(args, unsigned int);
+	int binary[32];
+	int j = 0;
+
+	if (number == 0)
+	{
+		_putchar('0');
+		*i += 1;
+		return;
+	}
+
+	while (number > 0)
+	{
+		binary[j] = number % 2;
+		number /= 2;
+		j++;
+	}
+
+	for (j--; j >= 0; j--)
+	{
+		_putchar(binary[j] + '0');
+		*i += 1;
 	}
 }
