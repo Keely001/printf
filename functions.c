@@ -4,6 +4,7 @@
  * str_printer - function to print strng
  * @args: argument
  * @i: pointer to counter
+ *
  * Return: none
  */
 
@@ -24,6 +25,7 @@ void str_printer(va_list args, int *i)
 /**
  * percentage_printer - function to print char
  * @i: pointer to counter
+ *
  * Return: none
  */
 void percentage_printer(int *i)
@@ -35,7 +37,8 @@ void percentage_printer(int *i)
 /**
  * char_printer - function to print char
  * @args: argument
- * @i: pointer to counter
+ * @i: pointer to an integer
+ *
  * Return: none
  */
 
@@ -48,11 +51,13 @@ void char_printer(va_list args, int *i)
 }
 
 /**
- * print_decimal - prints an integer in decimal format
- * @args: argument
- * @i: pointer to counter
- * Return: none
+ * print_decimal - function that prints a decimal integer number
+ * @args: arguments
+ * @i: pointer to an integer
+ *
+ * Return: void
  */
+
 void print_decimal(va_list args, int *i)
 {
 	int num = va_arg(args, int);
