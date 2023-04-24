@@ -28,6 +28,29 @@ int _printf(const char *format, ...)
 				char_printer(args, &i);
 			else if (*format == 's')
 				str_printer(args, &i);
+			else if (*format == 'd' || *format == 'i')
+			{
+				int num = va_arg(args, int);
+				int div = 1;
+
+				if (num < 0)
+				{
+					_putchar('-');
+					i++;
+					num *= -1;
+				}
+
+				while (num / div > 9)
+					div *= 10;
+
+				while (div != 0)
+				{
+					_putchar(num / div + '0');
+					i++;
+					num %= div;
+					div /= 10;
+				}
+			}
 			else if (*format == '%')
 				percentage_printer(&i);
 			else
@@ -94,4 +117,3 @@ void percentage_printer(int *i)
 	_putchar('%');
 	*i += 1;
 }
-
