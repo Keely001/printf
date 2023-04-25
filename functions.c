@@ -209,7 +209,7 @@ void octal_printer(va_list args, int *buff_size, char buffer[], int *count)
  * @count: pointer to counter
  * @buff_size: position of buffer
  * @buffer: array of characters
- * @uppercase: diff
+ * @uppercase: dif
  * Return: none
  */
 
