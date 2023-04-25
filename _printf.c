@@ -39,14 +39,17 @@ int _printf(const char *format, ...)
 			else if (*format == 'X')
 				hexadecimal_printer(args, &i, 1);
 			else
+			{
 				_putchar('%');
 				_putchar(*format);
 				i += 2;
+			}
 		}
 		else
 			i += _putchar(*format);
 		format++;
 	}
+
 	va_end(args);
 
 	return (i);
