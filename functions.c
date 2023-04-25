@@ -197,7 +197,7 @@ void octal_printer(va_list args, int *buff_size, char buffer[], int *count)
  * hexadecimal_printer - function to print hexadecimal integer
  * @args: argument
  * @i: pointer to counter
- * @capital: flag to indicate if hex is capital or not
+ * @capital: flag to indicate if hex is capital
  * Return: none
  */
 
