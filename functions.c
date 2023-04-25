@@ -7,19 +7,21 @@
  *
  * Return: none
  */
-
-void str_printer(va_list args, int *i)
+void str_printer(va_list args, int *buff_size, char buffer[], int *count)
 {
-	char *str = va_arg(args, char*);
+        char* str = va_arg(args, char*);
+        int len = strlen(str);
 
-	if (str == NULL)
-		str = "(null)";
-	while (*str != '\0')
-	{
-		_putchar(*str);
-		*i += 1;
-		str++;
-	}
+        for (int i = 0; i < len; i++)
+        {
+                buffer[(*buff_size)++] = str[i];
+		*count++;
+                if (*buff_size == 1024)
+                {
+                print_buffer(buffer, *buff_size);
+                *buff_size = 0;
+                }
+        }
 }
 
 /**
@@ -28,11 +30,12 @@ void str_printer(va_list args, int *i)
  *
  * Return: none
  */
-void percentage_printer(int *i)
+void percentage_printer(int *buff_size, char buffer[], int *count)
 {
-	_putchar('%');
-	*i += 1;
+        buffer[(*buff_size)++] = '%';
+	*count++;
 }
+
 
 /**
  * char_printer - function to print char
@@ -42,12 +45,11 @@ void percentage_printer(int *i)
  * Return: none
  */
 
-void char_printer(va_list args, int *i)
+void char_printer(va_list args, int *buff_size, char buffer[], int *count)
 {
-	char a = va_arg(args, int);
-
-	*i += 1;
-	_putchar(a);
+        char c = va_arg(args, int);
+        buffer[(*buff_size)++] = c;
+	*count++;
 }
 
 /**
@@ -58,26 +60,41 @@ void char_printer(va_list args, int *i)
  * Return: void
  */
 
-void decimal_printer(va_list args, int *i)
-{
-	int num = va_arg(args, int);
-	int div = 1;
 
-	if (num < 0)
-	{
-	_putchar('-');
-	*i += 1;
-	num *= -1;
-	}
-	while (num / div > 9)
-		div *= 10;
-	while (div != 0)
-	{
-		_putchar(num / div + '0');
-		*i += 1;
-		num %= div;
-		div /= 10;
-	}
+void decimal_printer(va_list args, int *buff_size, char buffer[], int *count)
+{
+        int num = va_arg(args, int);
+        char str_num[20];
+        int i = 0;
+
+        if (num < 0)
+        {
+                buffer[(*buff_size)++] = '-';
+		*count++;
+                num = -num;
+        }if (num == 0)
+        {
+                str_num[i++] = '0';
+        }
+        else
+        {
+                while (num != 0)
+                {
+                        int digit = num % 10;
+                        str_num[i++] = digit + '0';
+                        num /= 10;
+                }
+        }
+        for (int j = i - 1; j >= 0; j--)
+        {
+                buffer[(*buff_size)++] = str_num[j];
+		*count++;
+                if (*buff_size == 1024)
+                {
+                        print_buffer(buffer, *buff_size);
+                        *buff_size = 0;
+                }
+        }
 }
 
 /**
@@ -85,87 +102,95 @@ void decimal_printer(va_list args, int *i)
  * @args: argument
  * @i: pointer to the counter
  * Return: none
- */
-void binary_printer(va_list args, int *i)
+*/
+void binary_printer(va_list args, int *buff_size, char buffer[], int *count)
 {
-	unsigned int number = va_arg(args, unsigned int);
-	int binary[32];
-	int j = 0;
+    unsigned int num = va_arg(args, unsigned int);
+    char str_num[32];
+    int i = 0;
 
-	if (number == 0)
-	{
-		_putchar('0');
-		*i += 1;
-		return;
-	}
+    do {
+        str_num[i++] = (num % 2) + '0';
+        num /= 2;
+    } while (num != 0);
+    while (i < 8) {
+        str_num[i++] = '0';
+    }
 
-	while (number > 0)
-	{
-		binary[j] = number % 2;
-		number /= 2;
-		j++;
-	}
+    for (int j = i - 1; j >= 0; j--)
+    {
+        buffer[(*buff_size)++] = str_num[j];
+	*count++;
 
-	for (j--; j >= 0; j--)
-	{
-		_putchar(binary[j] + '0');
-		*i += 1;
-	}
+        if (*buff_size == 1024)
+        {
+            print_buffer(buffer, *buff_size);
+            *buff_size = 0;
+        }
+    }
 }
 
 /**
  * unsigned_decimal_printer - function to print unsigned decimal integer
  * @args: argument
- * @i: pointer to counter
+* @i: pointer to counter
  * Return: none
  */
 
-void unsigned_decimal_printer(va_list args, int *i)
+void unsigned_decimal_printer(va_list args, int *buff_size, char buffer[], int *count)
 {
-	unsigned int num = va_arg(args, unsigned int);
-	unsigned int div = 1;
+    unsigned int num = va_arg(args, unsigned int);
+    char str_num[32];
+    int i = 0;
+    do {
+        str_num[i++] = (num % 10) + '0';
+        num /= 10;
+    }
+   while (num != 0);
 
-	while (num / div > 9)
-		div *= 10;
+    for (int j = i - 1; j >= 0; j--)
+    {
+        buffer[(*buff_size)++] = str_num[j];
+	*count++;
 
-	while (div != 0)
-	{
-		_putchar(num / div + '0');
-		*i += 1;
-		num %= div;
-		div /= 10;
-	}
+        if (*buff_size == 1024)
+        {
+            print_buffer(buffer, *buff_size);
+            *buff_size = 0;
+        }
+    }
 }
 
 
 /**
  * octal_printer - function to print octal integer
- * @args: argument
+* @args: argument
  * @i: pointer to counter
  * Return: none
  */
 
-void octal_printer(va_list args, int *i)
+void octal_printer(va_list args, int *buff_size, char buffer[], int *count)
 {
-	unsigned int num = va_arg(args, unsigned int);
-	int octal_num[100];
-	int k = 0;
+    unsigned int num = va_arg(args, unsigned int);
+    char str_num[32];
+    int i = 0;
 
-	while (num != 0)
-	{
-		octal_num[k] = num % 8;
-		num /= 8;
-		k++;
-	}
+    do {
+        str_num[i++] = (num % 8) + '0';
+        num /= 8;
+    } while (num != 0);
 
-	k--;
+    for (int j = i - 1; j >= 0; j--)
+    {
+        buffer[(*buff_size)++] = str_num[j];
+	*count++;
 
-	while (k >= 0)
-	{
-		_putchar(octal_num[k] + '0');
-		*i += 1;
-		k--;
-	}
+        if (*buff_size == 1024)
+        {
+            print_buffer(buffer, *buff_size);
+            *buff_size = 0;
+        }
+    }
 }
 
 /**
@@ -176,32 +201,31 @@ void octal_printer(va_list args, int *i)
  * Return: none
  */
 
-void hexadecimal_printer(va_list args, int *i, int capital)
+void hexadecimal_printer(va_list args, int *buff_size, char buffer[], int uppercase, int *count)
 {
-	unsigned int num = va_arg(args, unsigned int);
-	char hex_num[100];
-	int n = 0;
+    unsigned int num = va_arg(args, unsigned int);
+    char str_num[32];
+    int i = 0;
 
-	while (num != 0)
-	{
-		int temp = 0;
-		temp = num % 16;
+    do {
+        int digit = num % 16;
+        if (digit < 10)
+            str_num[i++] = digit + '0';
+        else
+            str_num[i++] = digit - 10 + 'a';
+        num /= 16;
+    } while (num != 0);
 
-		if (temp < 10)
-			hex_num[n] = temp + 48;
-		else
-			hex_num[n] = temp + (capital ? 55 : 87);
+    for (int j = i - 1; j >= 0; j--)
+    {
+        buffer[(*buff_size)++] = str_num[j];
+	*count++;
 
-		num /= 16;
-		n++;
-	}
-
-	n--;
-
-	while (n >= 0)
-	{
-		_putchar(hex_num[n]);
-		*i += 1;
-		n--;
-	}
+        if (*buff_size == 1024)
+        {
+            print_buffer(buffer, *buff_size);
+            *buff_size = 0;
+        }
+    }
 }
+
