@@ -11,8 +11,7 @@
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int i = 0, k = 0;
-	char buffer[1024];
+	int i = 0;
 
 	va_start(args, format);
 
@@ -48,8 +47,9 @@ int _printf(const char *format, ...)
 		}
 		else
 			i += _putchar(*format);
-		format;
+		format++;
 	}
+
 	va_end(args);
 
 	return (i);
