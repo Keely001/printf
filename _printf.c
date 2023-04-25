@@ -1,20 +1,18 @@
 #include "main.h"
 
-
 /**
  * _printf - produces output according to format
  * @format: pointer to a string
  *..: variadic arguments.
-
  * Return: the number of charachters printed
+ *
  */
 
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int count = 0;
+	int i = 0, k = 0;
 	char buffer[1024];
-	int buff_size = 0;
 
 	va_start(args, format);
 
@@ -24,44 +22,34 @@ int _printf(const char *format, ...)
 		{
 			format++;
 			if (*format == 'c')
-				char_printer(args, &buff_size, buffer, &count);
+				char_printer(args, &i);
 			else if (*format == 's')
-				str_printer(args, &buff_size, buffer, &count);
+				str_printer(args, &i);
 			else if (*format == '%')
-				percentage_printer(&buff_size, buffer, &count);
+				percentage_printer(&i);
 			else if (*format == 'd' || *format == 'i')
-				decimal_printer(args, &buff_size, buffer, &count);
+				decimal_printer(args, &i);
 			else if (*format == 'b')
-				binary_printer(args, &buff_size, buffer, &count);
+				binary_printer(args, &i);
 			else if (*format == 'u')
-				unsigned_decimal_printer(args, &buff_size, buffer, &count);
+				unsigned_decimal_printer(args, &i);
 			else if (*format == 'o')
-				octal_printer(args, &buff_size, buffer, &count);
+				octal_printer(args, &i);
 			else if (*format == 'x')
-				hexadecimal_printer(args, &buff_size, buffer, 0, &count);
+				hexadecimal_printer(args, &i, 0);
 			else if (*format == 'X')
-				hexadecimal_printer(args, &buff_size, buffer, 1, &count);
+				hexadecimal_printer(args, &i, 1);
 			else
 			{
-				buffer[buff_size++] = '%';
-				buffer[buff_size++] = *format;
-				count += 2;
+				buffer[k++] = *format;
 			}
 		}
-		else
-		{
-			buffer[buff_size++] = *format;
-			count++;
-		}
 		format++;
-		if (buff_size == 1024 || *format == '\0')
-		{
-			print_buffer(buffer, buff_size);
-			buff_size = 0;
-		}
 	}
+	
+	i = write(STDOUT_FILENO, buffer, k);
 
 	va_end(args);
 
-	return (count);
+	return (i);
 }
