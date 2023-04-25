@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #include <stdarg.h>
+#include <unistd.h>
 #include <stdlib.h>
 
 int _putchar(char c);
@@ -23,5 +24,7 @@ void unsigned_decimal_printer(va_list args, int *i);
 void octal_printer(va_list args, int *i);
 
 void hexadecimal_printer(va_list args, int *i, int uppercase);
+
+void print_buffer(char *buffer, int size);
 
 #endif
