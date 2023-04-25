@@ -205,3 +205,27 @@ void hexadecimal_printer(va_list args, int *i, int capital)
 		n--;
 	}
 }
+
+/**
+ * print_buffer - writes a buffer to STDOUT_FILENO in a very 
+ * small way
+ * @buffer: the buffer to print
+ * @size: the size of the buffer
+ *
+ * Return: void
+ */
+
+void print_buffer(char *buffer, int size)
+{
+    int written = 0;
+
+    while (written < size)
+    {
+        int res = write(STDOUT_FILENO, buffer + written, size - written);
+        if (res == -1)
+        {
+            break;
+        }
+        written += res;
+    }
+}
