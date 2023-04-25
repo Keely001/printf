@@ -11,53 +11,70 @@
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int i = 0;
 	char buffer[1024];
-	int buffer_size = 0;
+	int i = 0, k = 0;
 
 	va_start(args, format);
 
-	while (*format != '\0')
+	while (format && format[i])
 	{
-		if (*format == '%')
+		if (format[i] != '%')
 		{
-			format++;
-			if (*format == 'c')
-				char_printer(args, buffer, &buffer_size);
-			else if (*format == 's')
-				str_printer(args, buffer, &buffer_size);
-			else if (*format == '%')
-				percentage_printer(buffer, &buffer_size);
-			else if (*format == 'd' || *format == 'i')
-				decimal_printer(args, buffer, &buffer_size);
-			else if (*format == 'b')
-				binary_printer(args, buffer, &buffer_size);
-			else if (*format == 'u')
-				unsigned_decimal_printer(args, buffer, &buffer_size);
-			else if (*format == 'o')
-				octal_printer(args, buffer, &buffer_size);
-			else if (*format == 'x')
-				hexadecimal_printer(args, buffer, &buffer_size, 0);
-			else if (*format == 'X')
-				hexadecimal_printer(args, buffer, &buffer_size, 1);
-			else
+			buffer[k++] = format[i++];
+			if (k == 1024)
 			{
-				buffer[buffer_size++] = '%';
-				buffer[buffer_size++] = *format;
-				i += 2;
+				print_buffer(buffer, k);
+				k = 0;
 			}
+			continue;
 		}
-		else
+		i++;
+		if (format[i] == '\0')
+			return (-1);
+		switch (format[i])
 		{
-			buffer[buffer_size++] = *format;
-			i++;
+			case 'c':
+				k += char_printer(args, &buffer[k]);
+				break;
+			case 's':
+				k += str_printer(args, &buffer[k]);
+				break;
+			case '%':
+				buffer[k++] = '%';
+				break;
+			case 'd':
+			case 'i':
+				k += decimal_printer(args, &buffer[k]);
+				break;
+			case 'b':
+				k += binary_printer(args, &buffer[k]);
+				break;
+			case 'u':
+				k += unsigned_decimal_printer(args, &buffer[k]);
+				break;
+			case 'o':
+				k += octal_printer(args, &buffer[k]);
+				break;
+			case 'x':
+				k += hexadecimal_printer(args, &buffer[k], 0);
+				break;
+			case 'X':
+				k += hexadecimal_printer(args, &buffer[k], 1);
+				break;
+			default:
+				buffer[k++] = '%';
+				buffer[k++] = format[i];
+				break;
 		}
-		format++;
+		i++;
+		if (k == 1024)
+		{
+			print_buffer(buffer, k);
+			k = 0;
+		}
 	}
-
+	if (k > 0)
+		print_buffer(buffer, k);
 	va_end(args);
-
-	print_buffer(buffer, buffer_size);
-
-	return (i);
+	return (k);
 }
