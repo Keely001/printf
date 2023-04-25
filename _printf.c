@@ -42,7 +42,7 @@ int _printf(const char *format, ...)
 			{
 				_putchar('%');
 				_putchar(*format);
-				i = 1 + 2;
+				i = i + 2;
 			}
 		}
 		else
