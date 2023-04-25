@@ -3,8 +3,9 @@
 /**
  * str_printer - function to print strng
  * @args: argument
- * @i: pointer to counter
- *
+ * @count: pointer to counter
+ * @buff_size: position of buffer
+ * @buffer: array of characters
  * Return: none
  */
 void str_printer(va_list args, int *buff_size, char buffer[], int *count)
@@ -26,8 +27,9 @@ void str_printer(va_list args, int *buff_size, char buffer[], int *count)
 
 /**
  * percentage_printer - function to print char
- * @i: pointer to counter
- *
+ * @count: pointer to counter
+ * @buff_size: position of buffer
+ * @buffer: array of characters
  * Return: none
  */
 void percentage_printer(int *buff_size, char buffer[], int *count)
@@ -40,8 +42,9 @@ void percentage_printer(int *buff_size, char buffer[], int *count)
 /**
  * char_printer - function to print char
  * @args: argument
- * @i: pointer to an integer
- *
+ * @count: pointer to counter
+ * @buff_size: position of buffer
+ * @buffer: array of characters
  * Return: none
  */
 
@@ -54,9 +57,10 @@ void char_printer(va_list args, int *buff_size, char buffer[], int *count)
 
 /**
  * print_decimal - function that prints a decimal integer number
- * @args: arguments
- * @i: pointer to an integer
- *
+ * @args: argument
+ * @count: pointer to counter
+ * @buff_size: position of buffer
+ * @buffer: array of characters
  * Return: void
  */
 
@@ -100,7 +104,9 @@ void decimal_printer(va_list args, int *buff_size, char buffer[], int *count)
 /**
  * binary_printer - function that prints binary representation of numbers.
  * @args: argument
- * @i: pointer to the counter
+ * @count: pointer to counter
+ * @buff_size: position of buffer
+ * @buffer: array of characters
  * Return: none
 */
 void binary_printer(va_list args, int *buff_size, char buffer[], int *count)
@@ -133,7 +139,9 @@ void binary_printer(va_list args, int *buff_size, char buffer[], int *count)
 /**
  * unsigned_decimal_printer - function to print unsigned decimal integer
  * @args: argument
-* @i: pointer to counter
+ * @count: pointer to counter
+ * @buff_size: position of buffer
+ * @buffer: array of characters
  * Return: none
  */
 
@@ -164,8 +172,10 @@ void unsigned_decimal_printer(va_list args, int *buff_size, char buffer[], int *
 
 /**
  * octal_printer - function to print octal integer
-* @args: argument
- * @i: pointer to counter
+ * @args: argument
+ * @count: pointer to counter
+ * @buff_size: position of buffer
+ * @buffer: array of characters
  * Return: none
  */
 
@@ -196,8 +206,10 @@ void octal_printer(va_list args, int *buff_size, char buffer[], int *count)
 /**
  * hexadecimal_printer - function to print hexadecimal integer
  * @args: argument
- * @i: pointer to counter
- * @capital: flag to indicate if hex is capital
+ * @count: pointer to counter
+ * @buff_size: position of buffer
+ * @buffer: array of characters
+ * @uppercase: diff
  * Return: none
  */
 
