@@ -41,14 +41,15 @@ int _printf(const char *format, ...)
 				hexadecimal_printer(args, &i, 1);
 			else
 			{
-				buffer[k++] = *format;
+				_putchar('%');
+				_putchar(*format);
+				i += 2;
 			}
 		}
-		format++;
+		else
+			i += _putchar(*format);
+		format;
 	}
-	
-	i = write(STDOUT_FILENO, buffer, k);
-
 	va_end(args);
 
 	return (i);
