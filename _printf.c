@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * _printf - produces output according to format
+ * _printf - produces output according to format of the input
  * @format: pointer to a string
  *..: variadic arguments.
  * Return: the number of charachters printed
