@@ -12,8 +12,6 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int i = 0;
-	char buffer[1024];
-	int buffer_size = 0;
 
 	va_start(args, format);
 
@@ -42,21 +40,14 @@ int _printf(const char *format, ...)
 				hexadecimal_printer(args, &i, 1);
 			else
 			{
-				buffer[buffer_size++] = '%';
-				buffer[buffer_size++] = *format;
+				_putchar('%');
+				_putchar(*format);
+				i += 2;
 			}
 		}
 		else
-		{
-			buffer[buffer_size++] = *format;
-		}
-		format++;
-
-		if (buffer_size == 1024 || *format == '\0')
-		{
-			print_buffer(buffer, buffer_size);
-			buffer_size  = 0;
-		}
+			i += _putchar(*format);
+			format++;
 	}
 
 	va_end(args);
